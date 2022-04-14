@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <!-- Blog Here -->
+    <div class="mt-5">
+        {% if not blogs.items %}
+            <p align="center"><b>No Blogs to Show!</b></p>
+        {% else %}
+            <div class="row">
+                {% for blog in blogs.items %}
+                <div class="col-6">
+                    <div class="blog row align-items-center border border-2 rounded-3 p-3 m-2">
+                        <div class="col-3 col-md-3 col-lg-2 p-1">
+                            <img class="profile_pic" src="{{ url_for('static', filename='profile_pic/'+blog.author.profile_pic) }}" width="100%" height="auto">
+                        </div>
+                        <div class="col">
+                            <a class="title" href="{{ url_for('blog', blog_id=blog.id) }}">{{ blog.title }}</a><br>
+                            <div class="row">
+                            <a class="col authorname m-0" href="{{ url_for('user_blog', user_id=blog.author.id) }}">{{ blog.author.name }}</a>
+                            <span align="right" class="col date">{{ blog.date_posted.strftime('%d %B %y') }}</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <p>{{ blog.content[0:300]|safe }}</p>
+                            <a href="{{ url_for('blog', blog_id=blog.id) }}"><button class="btn btn-outline-primary mt-2">Read more</button></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    {% if blogs %}
+    <div class="position-relative mt-5">
+        <div class="position-absolute top-50 start-50 translate-middle mt-3">
+        {% for page_num in blogs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if blogs.page == page_num %}
+                        <a class="btn btn-dark" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-dark" href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock content %}

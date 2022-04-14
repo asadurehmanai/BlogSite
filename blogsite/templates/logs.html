@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+{% endblock head %}
+
+{% block content %}
+    <!-- Registration Form -->
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-5 mx-auto">
+            <div class="p-5 shadow rounded-3 formContainer">
+                <h3 align="center" class="mb-4">Logs</h3>
+
+                <div class="card text-center mb-4">
+                  <div class="card-header">
+                      <i class="bi bi-people-fill text-muted"></i> <span class="text-muted">Total Registered Users</span>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        {% if total_user %}{{ total_user }}{% else %}No User{% endif %}
+                    </h5>
+                  </div>
+                </div>
+
+                <div class="card text-center">
+                  <div class="card-header">
+                    <i class="bi bi-file-post-fill text-muted"></i> <span class="text-muted">Total Blogs Posted</span>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        {% if total_blog %}{{ total_blog }}{% else %}No Blogs{% endif %}
+                    </h5>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

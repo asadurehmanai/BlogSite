@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <form action="" method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <!-- New Blog and Publish Button -->
+        <div class="row align-items-center mb-2 p-0">
+            <div class="col p-0">
+                <h2>{{ legend }}</h2>
+            </div>
+            <div class="col-1 p-0">
+                {{ form.submit(class='btn btn-primary') }}
+            </div>
+        </div>
+
+        <!-- Title Input -->
+        <div class="form-floating my-2">
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+            {{ form.title(class="form-control", id="floatingInputValue") }}
+            {{ form.title.label(for="floatingTitleValue") }}
+        </div>
+
+        <div class="my-2">
+            {{ form.audio.label(class='form-label') }}
+            {{ form.audio(class='form-control', id='formFile') }}
+            {% if form.audio.errors %}
+                {% for error in form.audio.errors %}
+                    <span class="text-danger error">*{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="my-2">
+            {{ form.video.label(class='form-label') }}
+            {{ form.video(class='form-control', id='formFile') }}
+            {% if form.video.errors %}
+                {% for error in form.video.errors %}
+                    <span class="text-danger error">*{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="my-2">
+            {{ form.image.label(class='form-label', for='Image') }}
+            {{ form.image(class='form-control', id='formFile', onchange='preview()') }}
+            {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                    <span class="text-danger error">*{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% if not form.image.errors %}
+            <img id="frame" src="" class="img-fluid rounded-2" />
+        {% endif %}
+
+        <!-- Content Area -->
+        <div class="form-floating my-2">
+            {% if form.content.errors %}
+            {% for error in form.content.errors %}
+                <span class="text-danger error">*{{ error }}</span>
+            {% endfor %}
+            {% endif %}
+            {{ form.content(class="form-control", id="floatingTextarea") }}
+        </div>
+    </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='content') }}
+</div>
+
+<script>
+    function preview() {
+                frame.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+{% endblock %}

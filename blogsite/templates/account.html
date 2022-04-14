@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="py-4 px-5 shadow rounded-3" style="background-color: #ffffff;">
+
+                <!-- Profile Picture -->
+                <img src="{{ image_file }}" class="mx-auto d-block profile_pic" alt="{{ current_user.name }} Profile Picture">
+
+                <!-- Update Profile Pic Button -->
+                <div class="profile_pic_btn">
+                    <a href="" type="link" data-bs-toggle="modal" data-bs-target="#updatePic">
+                    Update Picture
+                    </a>
+                </div>
+
+                <!-- Full Name -->
+                <h2 align="center"><b>{{ current_user.name }}</b></h2>
+
+                <!-- Update Name Form -->
+                <form class="mt-4" action="{{ url_for('account') }}" method="post">
+                    {{ nameForm.hidden_tag() }}
+                    <fieldset class="border p-3 rounded-3">
+                    <legend><b>Update Name</b></legend>
+                    <div class="form-floating my-3">
+                        {{ nameForm.name(class="form-control", id="floatingName") }}
+                        {{ nameForm.name.label(for="floatingName") }}
+                        {% if nameForm.name.errors %}
+                        {% for error in nameForm.name.errors %}
+                            <span class="text-danger error">*{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    {{ nameForm.submit(class='btn btn-dark') }}
+                    </fieldset>
+                </form>
+
+                <!-- Update Password Form -->
+                <form class="mt-4" action="{{ url_for('account') }}" method="post">
+                    {{ passForm.hidden_tag() }}
+                    <fieldset class="border p-3 rounded-3">
+                    <legend><b>Update Password</b></legend>
+
+                    <div class="form-floating my-3">
+                        {{ passForm.old_password(class="form-control", id="floatingOld") }}
+                        {{ passForm.old_password.label(for="floatingOld") }}
+                        {% if passForm.old_password.errors %}
+                        {% for error in passForm.old_password.errors %}
+                            <span class="text-danger error">*{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-floating my-3">
+                        {{ passForm.new_password(class="form-control", id="floatingNew") }}
+                        {{ passForm.new_password.label(for="floatingNew") }}
+                        {% if passForm.new_password.errors %}
+                        {% for error in passForm.new_password.errors %}
+                            <span class="text-danger error">*{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="form-floating my-3">
+                        {{ passForm.confirm_password(class="form-control", id="floatingConfirm") }}
+                        {{ passForm.confirm_password.label(for="floatingConfirm") }}
+                        {% if passForm.confirm_password.errors %}
+                        {% for error in passForm.confirm_password.errors %}
+                            <span class="text-danger error">*{{ error }}</span>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    {{ passForm.submit(class="btn btn-dark") }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade" id="updatePic" tabindex="-1" aria-labelledby="updatePicLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updatePicLabel">Update Profile Picture</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="{{ url_for('account') }}" method="post" enctype="multipart/form-data">
+          <div class="modal-body">
+                {{ profileForm.hidden_tag() }}
+
+                {% if profileForm.picture.errors %}
+                    {{ profileForm.picture() }} <!-- Invalid Design Input -->
+                    {% for error in profileForm.picture.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                {% else %}
+                    {{ profileForm.picture() }}
+                {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            {{ profileForm.submit(class="btn btn-primary") }}
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

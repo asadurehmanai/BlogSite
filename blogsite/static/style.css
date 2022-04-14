@@ -1,0 +1,45 @@
+body{
+	font-family: Helvetica, sans-serif;
+}
+
+p{
+    white-space: pre-wrap;
+}
+
+.formContainer{
+    margin-top: 20%;
+    background-color: #ffffff;
+}
+
+.blog .title{
+    font-size: 25px;
+   	color: #737373;
+   	text-decoration: none;
+}
+
+.blog .title:hover{
+	color: #0f0f0f;
+}
+
+.profile_pic{
+    border-radius: 100%;
+}
+
+.profile_pic_btn{
+    text-align: center;
+}
+
+.authorname{
+	color: #009ac4;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.blog .date{
+	font-size: 15px;
+}
+
+.error{
+    font-size:15px;
+    margin-right: 3px;
+}
